@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="calculadoraDias.View.frmPrincipal">
+    <NavigationPage.TitleView>
+        <AbsoluteLayout VerticalOptions="CenterAndExpand">
+            <Button ImageSource="ic_action_menu.png" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0,0,40,40"/>
+            <Button ImageSource="ic_action_settings.png" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="1,0,40,40" />
+        </AbsoluteLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="80"/>
+            </Grid.RowDefinitions>
+            <StackLayout Grid.Row="0">
+                <Label Text="Selecciona las fechas para calcular" FontSize="Large" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="0,15,0,0"/>
+            </StackLayout>
+            <StackLayout Grid.Row="1" Margin="20,0,20,0">
+                <Label Text="Fecha Inicio:"/>
+                <DatePicker x:Name="dpFechaInicio" />
+            </StackLayout>
+            <StackLayout Grid.Row="2" Margin="20,0,20,0">
+                <Label Text="Fecha Fin:"/>
+                <DatePicker x:Name="dpFechaFin"/>
+            </StackLayout>
+            <StackLayout Grid.Row="3" >
+                <Label Text="30 Dias" FontSize="60" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="0,15,0,0"/>
+            </StackLayout>
+            <StackLayout Grid.Row="4">
+                <Label Text="Festividades" FontSize="30" FontAttributes="Bold" FontFamily="Arial Black" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="0,15,0,0"/>
+                <Label Text="1 de mayo dia del trabajo" FontSize="15" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                <Label Text="21 de mayo natalicio del beni" FontSize="15" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+            </StackLayout>
+            <StackLayout Grid.Row="5">
+                <Button Text="Calcular" HeightRequest="70" Margin="20,0,20,0" BackgroundColor="SkyBlue"/>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
