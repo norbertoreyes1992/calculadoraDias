@@ -14,35 +14,36 @@
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="70"/>
                 <RowDefinition Height="70"/>
                 <RowDefinition Height="80"/>
-                <RowDefinition Height="80"/>
-                <RowDefinition Height="100"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="80"/>
             </Grid.RowDefinitions>
             <StackLayout Grid.Row="0">
                 <Label Text="Selecciona las fechas para calcular" FontSize="Large" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="0,15,0,0"/>
             </StackLayout>
             <StackLayout Grid.Row="1" Margin="20,0,20,0">
                 <Label Text="Fecha Inicio:"/>
-                <DatePicker x:Name="dpFechaInicio" />
+                <DatePicker x:Name="dpFechaInicio" Date="{Binding dtFechaInicio}"/>
             </StackLayout>
             <StackLayout Grid.Row="2" Margin="20,0,20,0">
                 <Label Text="Fecha Fin:"/>
-                <DatePicker x:Name="dpFechaFin"/>
+                <DatePicker x:Name="dpFechaFin" Date="{Binding dtFechaFin}"/>
             </StackLayout>
-            <StackLayout Grid.Row="3" >
-                <Label Text="30 Dias" FontSize="60" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="0,15,0,0"/>
+            <StackLayout Grid.Row="3">
+                <Button Text="Calcular" HeightRequest="70" Margin="20,0,20,0" BackgroundColor="SkyBlue"
+                        Command="{Binding calcularDiasCommand}" />
             </StackLayout>
-            <StackLayout Grid.Row="4">
-                <Label Text="Festividades" FontSize="30" FontAttributes="Bold" FontFamily="Arial Black" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="0,15,0,0"/>
-                <Label Text="1 de mayo dia del trabajo" FontSize="15" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                <Label Text="21 de mayo natalicio del beni" FontSize="15" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+            <StackLayout Grid.Row="4" >
+                <Label Text="{Binding sTotalDias}" FontSize="60" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="0,15,0,0"/>
             </StackLayout>
             <StackLayout Grid.Row="5">
-                <Button Text="Calcular" HeightRequest="70" Margin="20,0,20,0" BackgroundColor="SkyBlue"/>
+                <Label Text="Festividades" FontSize="30" FontAttributes="Bold" FontFamily="Arial Black" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="0,15,0,0"/>
+                <ListView ItemsSource="{Binding dtListaFechas}"/>
             </StackLayout>
+         
         </Grid>
     </ContentPage.Content>
 </ContentPage>
