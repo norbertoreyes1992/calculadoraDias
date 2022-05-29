@@ -2,8 +2,9 @@
 using Android.Widget;
 using calculadoraDias.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace calculadoraDias.ViewModel
 {
@@ -57,21 +58,27 @@ namespace calculadoraDias.ViewModel
             }
         }
 
+        public INavigation Navigation { get; set; }
+
+
         #endregion
 
         #region Comandos
         public command calcularDiasCommand { get; private set; }
+        public command configuracionCommand { get; private set; }
 
         #endregion
 
         #region Contructor
-        public frmPricipalViewModel()
+        public frmPricipalViewModel(INavigation navigation)
         {
             dtFechaInicio = DateTime.Now;
             dtFechaFin = DateTime.Now;
             calcularDiasCommand = new command(calcularDias);
+            configuracionCommand = new command(async () => await abrirConfiguracion());
             sTotalDias = "Dias";
             dtListaFechas = new ObservableCollection<DateTime>();
+            this.Navigation = navigation;
         }
 
         #endregion
@@ -83,7 +90,7 @@ namespace calculadoraDias.ViewModel
             dtListaFechas.Clear();
             if (DateTime.Compare(dtFechaInicio, dtFechaFin) >= 1)
             {
-                Toast.MakeText(Application.Context, "La fecha inicio no puede ser mayor a la final", ToastLength.Long).Show();
+                Toast.MakeText(Android.App.Application.Context, "La fecha inicio no puede ser mayor a la final", ToastLength.Long).Show();
                 return;
             }
 
@@ -96,6 +103,12 @@ namespace calculadoraDias.ViewModel
             }
             sTotalDias = iTotalDias > 1 ? iTotalDias.ToString() + " Dias" : iTotalDias.ToString() + " Dia";
         }
+
+        private async Task abrirConfiguracion()
+        {
+            await Navigation.PushAsync(new View.frmConfiguracion());
+        }
+
         #endregion
 
     }

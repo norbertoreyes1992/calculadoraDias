@@ -11,7 +11,7 @@ namespace calculadoraDias.View
         public frmPrincipal()
         {
             InitializeComponent();
-            frmPrincipalVM = new frmPricipalViewModel();
+            frmPrincipalVM = new frmPricipalViewModel(Navigation);
             this.BindingContext = frmPrincipalVM;
             NavigationPage.SetHasBackButton(this, false);
         }

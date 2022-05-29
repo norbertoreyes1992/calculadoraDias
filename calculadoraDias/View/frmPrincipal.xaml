@@ -7,7 +7,7 @@
              x:Class="calculadoraDias.View.frmPrincipal">
     <NavigationPage.TitleView>
         <AbsoluteLayout VerticalOptions="CenterAndExpand">
-            <Button ImageSource="ic_action_menu.png" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0,0,40,40"/>
+            <Button ImageSource="ic_action_menu.png" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0,0,40,40" Command="{Binding configuracionCommand}"/>
             <Button ImageSource="ic_action_settings.png" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="1,0,40,40" />
         </AbsoluteLayout>
     </NavigationPage.TitleView>
