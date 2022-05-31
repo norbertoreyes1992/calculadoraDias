@@ -30,5 +30,15 @@ namespace calculadoraDias.Helpers
         {
             return db.Table<diasModel>().ToListAsync();
         }
+
+        public Task<int> eliminarDias(diasModel dia)
+        {
+            return db.DeleteAsync(dia);
+        }
+
+        public Task<int> actualizarDias(diasModel dia)
+        {
+            return db.UpdateAsync(dia);
+        }
     }
 }
