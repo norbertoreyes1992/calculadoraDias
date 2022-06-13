@@ -16,7 +16,7 @@ namespace calculadoraDias.Helpers
 
         public Task<int> guardarDia(diasModel dia)
         {
-            if (dia.iIdDia == 0)
+            if (dia.iIdDia == 1)
             {
                 return db.InsertAsync(dia);
             }
