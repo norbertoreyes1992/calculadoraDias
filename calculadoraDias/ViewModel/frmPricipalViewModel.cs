@@ -1,11 +1,12 @@
-﻿using Android.App;
+﻿using Acr.UserDialogs;
 using Android.Widget;
 using calculadoraDias.Helpers;
 using calculadoraDias.Model;
 using Newtonsoft.Json;
+using Plugin.Connectivity;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -111,38 +112,55 @@ namespace calculadoraDias.ViewModel
                 Toast.MakeText(Android.App.Application.Context, "La fecha inicio no puede ser mayor a la final", ToastLength.Long).Show();
                 return;
             }
-
-            //Create my object
-            var fechas = new
+            if (!CrossConnectivity.Current.IsConnected)
             {
-                fechaa = dtFechaInicio.ToString("yyyy-MM-dd"),
-                fechad = dtFechaFin.ToString("yyyy-MM-dd")
-            };
-
-            string jsonData = JsonConvert.SerializeObject(fechas);
-
-            var service = new HttpHelper<respuestaModel>();
-
-            var noticiasServicio = await service.getDays(jsonData);
-            if (noticiasServicio.ok)
+                Toast.MakeText(Android.App.Application.Context, "No se detecto una conexion a intertet, favor de revisar", ToastLength.Long).Show();
+                return;
+            }
+            try
             {
-                DateTime dtInicio = dtFechaInicio;
-                while (dtInicio <= dtFechaFin)
+                UserDialogs.Instance.ShowLoading("Calculando..");
+                //Create my object
+                var fechas = new
                 {
-                    var dia = noticiasServicio.holidays.FirstOrDefault(x => x.date == dtInicio.Date);
-                    if (dia != null)
+                    fechaa = dtFechaInicio.ToString("yyyy-MM-dd"),
+                    fechad = dtFechaFin.ToString("yyyy-MM-dd")
+                };
+
+                string jsonData = JsonConvert.SerializeObject(fechas);
+
+                var service = new HttpHelper<respuestaModel>();
+
+                var noticiasServicio = await service.getDays(jsonData);
+                if (noticiasServicio.ok)
+                {
+                    DateTime dtInicio = dtFechaInicio;
+                    while (dtInicio <= dtFechaFin)
                     {
-                        dtListaFechas.Add(dia.name);
+                        var dia = noticiasServicio.holidays.FirstOrDefault(x => x.date == dtInicio.Date);
+                        if (dia != null)
+                        {
+                            dtListaFechas.Add(dia.name);
+                        }
+                        dtInicio = dtInicio.AddDays(1);
+                        iTotalDias++;
                     }
-                    dtInicio = dtInicio.AddDays(1);
-                    iTotalDias++;
+                    sTotalDias = iTotalDias > 1 ? iTotalDias.ToString() + " Dias" : iTotalDias.ToString() + " Dia";
                 }
-                sTotalDias = iTotalDias > 1 ? iTotalDias.ToString() + " Dias" : iTotalDias.ToString() + " Dia";
+                else
+                {
+                    Toast.MakeText(Android.App.Application.Context, noticiasServicio.message, ToastLength.Long).Show();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Toast.MakeText(Android.App.Application.Context, noticiasServicio.message, ToastLength.Long).Show();
+                Debug.WriteLine(ex.Message);
             }
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+            }
+
         }
 
 
